@@ -1,0 +1,6 @@
+.DS_Store
+lookup_plugins/__pycache__
+.vagrant
+venv
+roles/*
+!roles/requirements.yaml

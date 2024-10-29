@@ -1,0 +1,20 @@
+# CentOS-EOL.repo
+#
+# This is an example config which can be used to deal with EOL RHEL
+# You MUST look to mirroring this locally if you want long term access
+#
+
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://archive.kernel.org/centos-vault/7.9.2009/os/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+#released updates
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://archive.kernel.org/centos-vault/7.9.2009/updates/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-72

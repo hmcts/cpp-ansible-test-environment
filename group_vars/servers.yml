@@ -1,0 +1,2 @@
+xdr_tags: "hmcts,server,test-ansible-install"
+cortex_env: nonprod

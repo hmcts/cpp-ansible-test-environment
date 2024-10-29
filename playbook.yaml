@@ -1,0 +1,27 @@
+---
+- hosts: servers
+  gather_facts: True
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: Add CentOS 7 base repo
+      copy:
+        src: ./test/centos7-base.repo
+        dest: /etc/yum.repos.d/CentOS-Base.repo
+        mode: 0755
+      register: centos_base_repo_template
+      when: (ansible_os_family == 'RedHat') and (ansible_distribution_major_version | int == 7)
+
+    # dnsmasq is enabled to read from vault on ansible controller over VPN
+    # vagrantfile set to use local resolver, we need supply a public DNS server and overwrite the 127.0.0.1 entry passed in
+    - name: Set public DNS server 
+      lineinfile:
+        path: /etc/resolv.conf
+        regex: "^nameserver"
+        insertafter: EOF
+        line: "nameserver 8.8.8.8"
+  
+  # swap/add roles here to test (add to roles/requirement.yaml)
+  roles:
+    - role: xdr-agent-install

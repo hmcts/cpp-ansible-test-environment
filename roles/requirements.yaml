@@ -1,0 +1,4 @@
+- name: xdr-agent-install
+  src: https://github.com/hmcts/cpp-ansible-role-xdr-agent-install.git
+  scm: git
+  version: master

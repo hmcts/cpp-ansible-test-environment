@@ -1,0 +1,1 @@
+sa_key: "{{lookup('vault', 'secret/xdr/sa_key').sa_key}}"
