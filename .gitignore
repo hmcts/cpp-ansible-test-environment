@@ -1,6 +1,8 @@
 .DS_Store
 lookup_plugins/__pycache__
+lookup_plugins/*.pyc
 .vagrant
 venv
 roles/*
 !roles/requirements.yaml
+playbook.retry

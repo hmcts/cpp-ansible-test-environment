@@ -18,7 +18,7 @@
     - name: Set public DNS server 
       lineinfile:
         path: /etc/resolv.conf
-        regex: "^nameserver"
+        regexp: "^nameserver"
         insertafter: EOF
         line: "nameserver 8.8.8.8"
   
