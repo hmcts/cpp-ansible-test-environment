@@ -1,6 +1,6 @@
 # cpp-ansible-test-environment
 
-This repo is an Ansible project with a Vagrantfile to enable local development of Ansible roles/playbooks. It is setup to mimic Ansible projects within Crime using CentOS7 as the machine OS, Ansible 2.9 & a Python PIP requrements file lifted from IDAM.ansible. 
+This repo is an Ansible project with a Vagrantfile to enable local development of Ansible roles/playbooks. It is setup to mimic Ansible projects within Crime using CentOS7 as the machine OS, Ansible 2.3 & a Python PIP requrements file lifted from IDAM.ansible. 
 
 
 ## Directory Structure
@@ -23,11 +23,13 @@ This repo is an Ansible project with a Vagrantfile to enable local development o
 Your local environment will need setting up to use the repo by performing the following:
 
 
-### Create Python3 Virtual Environment
+### Create Python2 Virtual Environment
 
-Ansible is written in python so it needs a python installation to work. Ansible 2.9 is old and as such the Python versions its compatible with have since become deprecated.
+Ansible is written in python so it needs a python installation to work. Ansible 2.3 is old and as such the Python versions its compatible with have since become deprecated.
 
-The highest compatible Python version with Ansible 2.9 is Python 3.8. Mac installation of Python is usually through Homebrew however Python 3.8 has now been disabled. The easiest way to install Python 3.8 with this in mind is using Pyenv.
+Ansible 2.3 is compatible with Python 2 and Python 3 however we want to match the Python version used in the main Crime PlatOps Jenkins instance. This is Python 2.7.15.
+
+Mac installation of Python is usually through Homebrew however Python 2.7.15 is disabled. The easiest way to install this is using Pyenv.
 
 
 #### Installing Pyenv
@@ -84,40 +86,54 @@ brew install pyenv
 
 Then reload your shell.
 
+#### Installing Pyenv Virtualenv
 
-#### Using Pyenv
+Pyenv-virtualenv is a pyenv plugin that provides features to manage virtualenvs environments for Python.
+
+Install through brew:
 
 ```bash
-pyenv install 3.8.20
-pyenv global 3.8.20
+brew install pyenv-virtualenv
 ```
 
-This installs the last minor version on Python 3.8 and makes it globally active for use. Pyenv symlinks to **python** and not **python3**.
+Run the following command:
 
-
-#### Create the venv
-
-Create the virtualenv and activate it:
 ```bash
-python -m venv ./venv/
-source ./venv/bin/activate
+eval "$(pyenv virtualenv-init -)"
 ```
+
+#### Using Pyenv and Pyenv Virtualenv
+
+```bash
+pyenv install 2.7.15
+pyenv global 2.7.15
+```
+
+This installs Python 2.7.15 and makes it globally active for use. Pyenv symlinks to **python**.
+
+```bash
+pyenv virtualenv 2.7.15 venv-2.7.15
+```
+
+This will create a virtualenv based on Python 2.7.15 under $(pyenv root)/versions in a folder called venv-2.7.15. $(pyenv root) defaults to .pyenv hidden folder in the user's home directory.
+
+```bash
+pyenv virtualenvs 
+```
+
+This will list the virtualenvs available to pyenv. Your virtual environment venv-2.7.15 should be listed as available.
+
+```bash
+pyenv activate venv-2.7.15
+```
+
+This will activate the python virtual environment.
 
 You'll now see a preprend in your shell showing we've loaded into our venv. Something similar to this:
 ```bash
-(venv) user.name
+(venv-2.7.15) user.name
 ```
-Exit the venv at any time by running **deactivate**
-
-
-#### Update Pip
-
-Pip is the package manager for Python. Since Python 3.8 the repo used to pull python packages has moved. Tell pip the new repo domain and to update itself:
-
-```bash
-pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --upgrade pip
-```
-
+Exit the venv at any time by running **source deactivate**
 
 #### Install packages using pip.requirements
 
